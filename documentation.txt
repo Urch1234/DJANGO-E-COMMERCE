@@ -1,0 +1,92 @@
+# Project Name Documentation
+
+## Models
+
+### Category
+
+Represents a product category.
+
+- **Fields:**
+  - `name` (CharField): Name of the category.
+
+- **Methods:**
+  - `__str__`: Returns the name of the category.
+
+### Customer
+
+Represents a customer of the online store.
+
+- **Fields:**
+  - `first_name` (CharField): First name of the customer.
+  - `last_name` (CharField): Last name of the customer.
+  - `phone` (PhoneNumberField): Phone number of the customer (optional).
+  - `email` (EmailField): Email address of the customer (unique).
+  - `password` (CharField): Hashed password of the customer.
+
+- **Methods:**
+  - `__str__`: Returns a formatted string with the customer's full name.
+  - `save`: Overrides the save method to hash the password before saving.
+
+### Product
+
+Represents a product available in the online store.
+
+- **Fields:**
+  - `name` (CharField): Name of the product.
+  - `price` (DecimalField): Price of the product (positive decimal value).
+  - `category` (ForeignKey): Category to which the product belongs.
+  - `description` (CharField): Description of the product (optional).
+  - `image` (ImageField): Image representing the product.
+
+- **Methods:**
+  - `__str__`: Returns the name of the product.
+
+### Order
+
+Represents a customer's order.
+
+- **Fields:**
+  - `product` (ForeignKey): Product in the order.
+  - `customer` (ForeignKey): Customer who placed the order.
+  - `quantity` (PositiveIntegerField): Quantity of the product in the order.
+  - `address` (CharField): Shipping address for the order.
+  - `phone` (PhoneNumberField): Contact phone number for the order (optional).
+  - `date_created` (DateTimeField): Date and time when the order was created.
+  - `delivery_date` (DateField): Expected delivery date for the order (optional).
+  - `status` (BooleanField): Status of the order (True if completed, False otherwise).
+
+- **Methods:**
+  - `__str__`: Returns a formatted string with information about the order.
+
+## Usage
+
+Provide examples and usage scenarios for each model. Include code snippets for creating, querying, and updating records. Explain any special considerations or constraints.
+
+```python
+# Example of creating a customer
+customer = Customer.objects.create(
+    first_name="John",
+    last_name="Doe",
+    email="john@example.com",
+    password="hashed_password"
+)
+
+# Example of creating a product
+product = Product.objects.create(
+    name="Example Product",
+    price=29.99,
+    category=my_category,
+    description="A brief description of the product.",
+    image="path/to/product/image.jpg"
+)
+
+# Example of creating an order
+order = Order.objects.create(
+    product=my_product,
+    customer=my_customer,
+    quantity=2,
+    address="123 Main St, Cityville",
+    phone="+1234567890",
+    delivery_date=datetime.date(2024, 12, 31),
+    status=False
+)
